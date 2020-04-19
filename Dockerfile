@@ -4,6 +4,8 @@ FROM httpd:2.4 as apache
 
 FROM ubuntu:18.04
 
+USER root
+
 COPY --from=virtuoso /usr/local/virtuoso-opensource /usr/local/virtuoso-opensource
 
 COPY --from=virtuoso /dump_nquads_procedure.sql /dump_nquads_procedure.sql
@@ -21,6 +23,10 @@ COPY ./virtuoso.ini /virtuoso.ini
 COPY ./load.sh /load.sh
 
 COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod 755 virtuoso.sh
+RUN chmod 755 load.sh
+RUN chmod 755 entrypoint.sh
 
 RUN apt-get update && \
     apt-get install -yq libreadline7 openssl crudini && \
