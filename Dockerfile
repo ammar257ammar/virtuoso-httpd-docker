@@ -22,11 +22,11 @@ COPY ./virtuoso.ini /virtuoso.ini
 
 COPY ./load.sh /load.sh
 
-COPY entrypoint.sh /entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
 
-RUN chmod 755 virtuoso.sh
-RUN chmod 755 load.sh
-RUN chmod 755 entrypoint.sh
+RUN chmod 755 /virtuoso.sh
+RUN chmod 755 /load.sh
+RUN chmod 755 /entrypoint.sh
 
 RUN apt-get update && \
     apt-get install -yq libreadline7 openssl crudini && \
