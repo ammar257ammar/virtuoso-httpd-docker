@@ -18,6 +18,8 @@ COPY --from=apache /usr/local/apache2 /usr/local/apache2
 
 COPY --from=apache /usr/local/bin/httpd-foreground /usr/local/bin/httpd-foreground
 
+COPY ./snorql /usr/local/apache2/htdocs/
+
 COPY ./virtuoso.ini /virtuoso.ini
 
 COPY ./load.sh /load.sh
