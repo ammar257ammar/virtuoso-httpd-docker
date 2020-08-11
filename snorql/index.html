@@ -1,80 +1,140 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <title>Snorql: A SPARQL Explorer</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <script type="text/javascript" src="prototype.js"></script>
-    <script type="text/javascript" src="scriptaculous/scriptaculous.js"></script>
-    <script type="text/javascript" src="sparql.js"></script>
-    <script type="text/javascript" src="namespaces.js"></script>
-    <script type="text/javascript" src="snorql.js"></script>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Snorql: A SPARQL Explorer - Extended Edition">
+    <meta name="author" content="Ammar Ammar (https://github.com/ammar257ammar)">
+	<link rel="icon" href="assets/images/favicon.ico">
+
+    <title>Snorql: A SPARQL Explorer - Extended Edition</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="assets/codemirror/lib/codemirror.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+
+	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+	
+    <script type="text/javascript" src="assets/codemirror/lib/codemirror.js"></script>	
+	<script type="text/javascript" src="assets/codemirror/mode/javascript/javascript.js"></script>
+	<script type="text/javascript" src="assets/codemirror/addon/selection/active-line.js"></script>
+	<script type="text/javascript" src="assets/codemirror/addon/edit/matchbrackets.js"></script>
+	<script type="text/javascript" src="assets/codemirror/sparql.js"></script>		
+	
+    <script type="text/javascript" src="assets/js/prototype.js"></script>
+    <script type="text/javascript" src="assets/js/scriptaculous/scriptaculous.js"></script>
+    <script type="text/javascript" src="assets/js/sparql.js"></script>
+    <script type="text/javascript" src="assets/js/namespaces.js"></script>
+    <script type="text/javascript" src="assets/js/snorql.js"></script>
+	<script type="text/javascript" src="assets/js/table2CSV.js"></script>
+	<script type="text/javascript" src="assets/js/script.js"></script>
   </head>
 
-  <body class="snorql" onload="snorql.start()">
-    <div id="header">
-      <h1 id="title">Snorql: A SPARQL Explorer</h1>
-      SPARQL Endpoint: <input size="100" name="endpoint" id="endpoint" value="https://query.wikidata.org/sparql" onchange="changeEndpoint();" />
-    </div>
-
-    <div class="section" style="float: right; width: 8em">
-      <h2>Browse:</h2>
-      <ul>
-        <li><a class="graph-link" href="?browse=superclasses">Super Classes</a></li>
-        <li><a class="graph-link" href="?browse=classes">Classes</a></li>
-        <li><a class="graph-link" href="?browse=properties">Properties</a></li>
-        <li id="browse-named-graphs-link"><a href="?browse=graphs">Named Graphs</a></li>
-      </ul>
-    </div>
-
-    <div id="default-graph-section" class="section" style="margin-right: 12em">
-      <h2 style="display: inline">GRAPH:</h2>
-      <p style="display: inline">
-        Default graph.
-        <a href="?browse=graphs">List named graphs</a>
-      </p>
-    </div>
-
-    <div id="named-graph-section" class="section" style="margin-right: 12em">
-      <h2 style="display: inline">GRAPH:</h2>
-      <p style="display: inline">
-        <span id="selected-named-graph">Named graph goes here</span>.
-        <a href="javascript:snorql.switchToDefaultGraph()">Switch back to default graph</a>
-      </p>
-    </div>
-
-    <div class="section" style="margin-right: 12em">
-      <h2>SPARQL:</h2>
-      <pre id="prefixestext"></pre>
-      <form id="queryform" action="#" method="get"><div>
-        <input type="hidden" name="query" value="" id="query" />
-        <input type="hidden" name="ep" value="" id="ep" />
-        <input type="hidden" name="output" value="json" id="jsonoutput" disabled="disabled" />
-        <input type="hidden" name="stylesheet" value="" id="stylesheet" disabled="disabled" />
-        <input type="hidden" name="graph" value="" id="graph-uri" disabled="disabled" />
-      </div></form>
-      <div>
-        <textarea name="query" rows="9" cols="80" id="querytext"></textarea>
-        Results:
-        <select id="selectoutput" onchange="snorql.updateOutputMode()">
-          <option selected="selected" value="browse">Browse</option>
-          <option value="json">as JSON</option>
-          <option value="xml">as XML</option>
-          <option value="xslt">as XML+XSLT</option>
-        </select>
-        <span id="xsltcontainer"><span id="xsltinput">
-          XSLT stylesheet URL:
-          <input id="xsltstylesheet" type="text" value="snorql/xml-to-html.xsl" size="30" />
-        </span></span>
-        <input type="button" value="Go!" onclick="snorql.submitQuery()" />
-        <input type="button" value="Reset" onclick="snorql.resetQuery()" />
+  <body onload="snorql.start()">
+ 
+	<nav class="navbar navbar-default">
+      <!-- <div class="container-fluid"> -->
+      <div class="container">
+        <div class="navbar-header">
+		  <a class="navbar-brand" id="index-page" href="">Snorql: A SPARQL Explorer - Extended Edition</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+		  <ul class="nav navbar-nav">
+			  <!-- <li class="active"><a href="#">Home</a></li>
+			  <li><a href="#">Page 1</a></li>
+			  <li><a href="#">Page 2</a></li>
+			  <li><a href="#">Page 3</a></li> -->
+		  </ul>	
+          <form class="navbar-form navbar-right">
+            <div class="input-group">
+				<span class="input-group-addon">SPARQL Endpoint</span>
+				<input size="50" class="form-control mr-sm-2" name="endpoint" id="endpoint" value="https://query.wikidata.org/sparql" onchange="changeEndpoint();" />		
+            </div>
+          </form>
+        </div><!--/.navbar-collapse -->
       </div>
-    </div>
-
-    <div class="section">
-      <div id="result"><span></span></div>
-    </div>
-
-    <div id="footer">Powered by <a id="poweredby" href="#">Snorql</a></div>
+    </nav>
+	
+	<div class="snorql container">
+	
+		<div class="row">
+		
+			<div class="col-md-8">
+				<form id="queryform" action="#" method="get">
+					<input type="hidden" name="query" value="" id="query" />
+					<input type="hidden" name="ep" value="" id="ep" />
+					<input type="hidden" name="output" value="json" id="jsonoutput" disabled="disabled" />
+					<input type="hidden" name="stylesheet" value="" id="stylesheet" disabled="disabled" />
+					<input type="hidden" name="graph" value="" id="graph-uri" disabled="disabled" />
+				</form>
+				
+				<div class="row">
+					<div class="col-md-12">		
+						<h4>SPARQL Query:</h4>
+						<textarea name="query" id="querytext" rows="9"></textarea>
+						<script>
+							var editor = CodeMirror.fromTextArea(document.getElementById("querytext"), {
+							  lineNumbers: true,
+							  mode: "application/sparql-query",
+							  matchBrackets: true
+							});
+						</script>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-12">		
+						Results:
+						<select id="selectoutput" onchange="snorql.updateOutputMode()">
+						  <option selected="selected" value="browse">Browse</option>
+						  <option value="json">as JSON</option>
+						  <option value="xml">as XML</option>
+						  <option value="xslt">as XML+XSLT</option>
+						</select>
+						<span id="xsltcontainer"><span id="xsltinput">
+						  XSLT stylesheet URL:
+						  <input id="xsltstylesheet" type="text" value="assets/xml-to-html.xsl" size="30" />
+						</span></span>
+						<input type="button" class="btn btn-success" value="Query" onclick="snorql.submitQuery()" />
+						<input type="button" class="btn btn-danger" value="Reset" onclick="snorql.resetQuery()" />
+						<input type="button" class="btn btn-warning" value="Export CSV" id="exportCSV" />
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="col-md-4">
+				<h4>SPARQL Examples:</h4>
+				<div class="panel panel-default">
+				  <div class="panel-heading">
+						<div class="input-group">
+							<input type="text" class="form-control" id="examples-repo" name="examples-repo" placeholder="Github Repositoty URL" onchange="changeExamplesRepo();">
+							<div class="input-group-btn">
+								<button id="fetch" class="btn btn-primary"><i class="glyphicon glyphicon-refresh"></i></button>
+							</div>
+						</div>
+				  </div>
+				  <div class="panel-body">
+					<ul class="list-group" id="examples"></ul>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+	
+		<div class="row">
+			<div class="col-md-12">
+				<div class="pre-scrollable" id="result"><span></span></div>
+			</div>
+		</div>
+	</div>
+	
+	<footer class="footer navbar-fixed-bottom">
+	  <div class="container">
+		<p>Powered by <a id="poweredby" href="#">Snorql</a></p>
+	  </div>
+	</footer>
   </body>
 </html>
