@@ -26,6 +26,7 @@ COPY ./load.sh /load.sh
 
 COPY ./entrypoint.sh /entrypoint.sh
 
+RUN mkdir -p /usr/local/apache2/htdocs/.well-known
 RUN chmod 755 /virtuoso.sh
 RUN chmod 755 /load.sh
 RUN chmod 755 /entrypoint.sh
