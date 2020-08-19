@@ -1,4 +1,5 @@
 FROM tenforce/virtuoso:1.3.2-virtuoso7.2.5.1 as virtuoso
+MAINTAINER  ammar257ammar@gmail.com
 
 FROM httpd:2.4 as apache
 
@@ -18,7 +19,10 @@ COPY --from=apache /usr/local/apache2 /usr/local/apache2
 
 COPY --from=apache /usr/local/bin/httpd-foreground /usr/local/bin/httpd-foreground
 
-COPY ./snorql /usr/local/apache2/htdocs/
+RUN apt-get update
+RUN apt-get -y install git
+
+RUN rm -rf /usr/local/apache2/htdocs/ && git clone https://github.com/ammar257ammar/snorql-extended.git /usr/local/apache2/htdocs/
 
 COPY ./virtuoso.ini /virtuoso.ini
 

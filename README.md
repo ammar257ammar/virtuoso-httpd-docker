@@ -31,7 +31,7 @@ Also, don't forget to replace "PASSWORD_HERE" with the password you set for Virt
 For the first time you run the container, the password you should use is "dba". Then, you can change it from the web interface "http://localhost:8890" and replace it in the next run for the container.
 
 ```bash
-docker run --name virtuoso-httpd \
+docker run --rm --name virtuoso-httpd \
     -p 8890:8890 -p 1111:1111 \
     -p 8080:80 -p 443:443 \
     -e DBA_PASSWORD=PASSWORD_HERE \
