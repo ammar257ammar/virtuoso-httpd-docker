@@ -30,6 +30,8 @@ Also, don't forget to replace "PASSWORD_HERE" with the password you set for Virt
 
 For the first time you run the container, the password you should use is "dba". Then, you can change it from the web interface "http://localhost:8890" and replace it in the next run for the container.
 
+Also, if you don't know the default graph URI, don't include it in your run command. Otherwise, the queries will not work against the endpoint.
+
 ```bash
 docker run --rm --name virtuoso-httpd \
     -p 8890:8890 -p 1111:1111 \
@@ -37,6 +39,9 @@ docker run --rm --name virtuoso-httpd \
     -e DBA_PASSWORD=PASSWORD_HERE \
     -e SPARQL_UPDATE=true \
     -e DEFAULT_GRAPH=http://example.com \
+    -e SNORQL_ENDPOINT=https://query.wikidata.org/sparql \
+    -e SNORQL_EXAMPLES_REPO=https://api.github.com/repos/egonw/SARS-CoV-2-Queries/contents/sparql \
+    -e SNORQL_TITLE="SNORQL: A SPARQL Explorer - Extended Edition" \
     -v PATH_TO_VIRTUOSO_DATA_FOLDER:/data \
     -v PATH_TO_VIRTUOSO_IMPORT_FOLDER:/import \
     -d virtuoso-httpd

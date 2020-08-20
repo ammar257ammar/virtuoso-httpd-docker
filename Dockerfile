@@ -24,6 +24,11 @@ RUN apt-get -y install git
 
 RUN rm -rf /usr/local/apache2/htdocs/ && git clone https://github.com/ammar257ammar/snorql-extended.git /usr/local/apache2/htdocs/
 
+COPY ./script.sh /script.sh
+
+RUN chmod 755 /script.sh
+RUN chmod +x script.sh
+
 COPY ./virtuoso.ini /virtuoso.ini
 
 COPY ./load.sh /load.sh
