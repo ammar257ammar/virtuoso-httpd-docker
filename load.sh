@@ -29,12 +29,22 @@ else
     isql_cmd_check="isql-v -U dba -P $VIRT_PSWD exec=\"checkpoint;\""
 
     # Build the Virtuoso commands
+    grant1="grant execute on \"DB.DBA.EXEC_AS\" to \"SPARQL\";"
+    grant2="grant select on \"DB.DBA.SPARQL_SINV_2\" to \"SPARQL\";"
+    grant3="grant execute on \"DB.DBA.SPARQL_SINV_IMP\" to \"SPARQL\";"
+    grant4="grant SPARQL_LOAD_SERVICE_DATA to \"SPARQL\";"
+    grant5="grant SPARQL_SPONGE to \"SPARQL\";"
     load_func="ld_dir('$VAD', '$data_file', '$graph_uri');"
     run_func="rdf_loader_run();"
     select_func="select * from DB.DBA.load_list WHERE ll_file LIKE '%${VAD}%';"
    
     # Run the Virtuoso commands
     ${isql_cmd} << EOF &> ${LOGFILE}
+	    $grant1
+	    $grant2
+	    $grant3
+	    $grant4
+	    $grant5
 	    $load_func
             $run_func
             $select_func   
