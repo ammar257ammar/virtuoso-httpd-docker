@@ -1,4 +1,5 @@
 #!/bin/bash
+
 bash /script.sh
 
 bash /virtuoso.sh &
