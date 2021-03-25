@@ -4,4 +4,4 @@ bash /script.sh
 
 bash /virtuoso.sh &
 
-bash httpd-foreground
+bash http-foreground
