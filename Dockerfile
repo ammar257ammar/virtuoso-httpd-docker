@@ -57,4 +57,4 @@ VOLUME /data
 WORKDIR /data
 EXPOSE 8890 1111 80 443
  
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"] 
