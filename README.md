@@ -1,6 +1,6 @@
 # Virtuoso-httpd docker image with data loader
 
-This repository is made to create a docker image that can run both Virtuoso and Apache web server in one container. It also facilitate data import into Virtuoso using custom-made bash script.
+This repository is made to create a docker image that can run both Virtuoso and Apache web server in one container. It also facilitate data import into Virtuoso using custom-made bash script. The docker image also includes [SNORQL](https://github.com/ammar257ammar/snorql-extended), a SPARQL explorer interface to facilitate querying the knowledge graph.
 
 
 
